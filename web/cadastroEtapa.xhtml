@@ -1,0 +1,144 @@
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<h:head>
+		<title>Cadastro de Etapas</title>
+	</h:head>
+	<h:body onload="#{cadastroEtapa.listarEtapas()}">
+		<h:form id="mainForm">
+			<ui:insert name="menu">
+				<ui:include src="/menu.xhtml" />
+			</ui:insert>
+			<p:panel id="panelEtapas" header="Etapas">
+				<h:panelGrid columns="1" style="float: left;">
+					<p:commandButton id="btnNovo" value="Novo" process="@this" icon="ui-icon-plusthick" update=":mainForm:modalCriarEditar" action="#{cadastroEtapa.prepararNovo()}"/>
+				</h:panelGrid>
+				<h:panelGrid columns="1" style="float: right;">
+					<p:commandButton value="Ajuda" icon="ui-icon-help" onclick="PF('ajuda').show();"/>
+				</h:panelGrid>
+			
+				<p:outputPanel id="listTabela" style="padding-top: 50px;">
+					<p:dataTable rows="10" var="etapa" value="#{cadastroEtapa.listaEtapa}" emptyMessage="Não existe etapa cadastrada." paginator="true" paginatorPosition="bottom">
+						<p:column headerText="Tipo de Processo" sortBy="#{etapa.tipoProcesso.nome}">
+							<h:outputText value="#{etapa.tipoProcesso.nome}"/>
+						</p:column>
+						<p:column headerText="Número da sequência" sortBy="#{etapa.nrSequencia}" style="width: 10%; text-align: center;">
+							<h:outputText value="#{etapa.nrSequencia}"/>
+						</p:column>
+						<p:column headerText="Nome" sortBy="#{etapa.nome}">
+							<h:outputText value="#{etapa.nome}"/>
+						</p:column>
+						<p:column headerText="Setor" sortBy="#{etapa.setor.nome}">
+							<h:outputText value="#{etapa.setor.nome}"/>
+						</p:column>
+						<p:column headerText="Permite anexo?" sortBy="#{etapa.permiteAnexoString}" style="width: 10%; text-align: center;">
+							<h:outputText value="#{etapa.permiteAnexoString}"/>
+						</p:column>
+						<p:column headerText="Tem parecer?" sortBy="#{etapa.temParecerString}" style="width: 10%; text-align: center;">
+							<h:outputText value="#{etapa.temParecerString}"/>
+						</p:column>
+						<p:column headerText="Ações" style="width: 10%; text-align: center;">
+							<p:commandLink process="@this" update=":mainForm:modalCriarEditar"
+										   action="#{cadastroEtapa.prepararEditar(etapa)}">
+								<p:graphicImage value="/img/btnEditar.png" id="btnEditar"/>
+								<p:tooltip for="btnEditar" value="Editar"/>
+								<f:setPropertyActionListener value="#{etapa}" target="#{cadastroEtapa.etapa}" />
+							</p:commandLink>
+							
+							&#160;&#160;
+							
+							<p:commandLink process="@this" update=":mainForm:modalExcluir"
+										   action="#{cadastroEtapa.prepararEditar(etapa)}">
+								<p:graphicImage value="/img/btnExcluir.png" id="btnExcluir"/>
+								<p:tooltip for="btnExcluir" value="Excluir"/>
+								<f:setPropertyActionListener value="#{etapa}" target="#{cadastroEtapa.etapa}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</p:panel>
+			
+			<!-- DIALOG PARA ABRIR O CADASTRO E EDIÇÃO DE ETAPA -->
+			<p:dialog id="modalCriarEditar" widgetVar="cadastro" resizable="false" width="800px" height="450px"
+					  closeOnEscape="false" draggable="false" modal="true" visible="#{cadastroEtapa.exibirModal()}">
+				<p:fieldset legend="Cadastro de etapa">
+					<h:panelGrid columns="2" cellpadding="8">
+						<p:outputLabel for="nome" value="* Nome: "/>
+						<p:inputText id="nome" value="#{cadastroEtapa.etapa.nome}" style="width: 400px;"/>
+						
+						<p:outputLabel for="tipoProcesso" value="* Tipo de processo: "/>
+						<p:selectOneMenu id="tipoProcesso" value="#{cadastroEtapa.etapa.tipoProcesso}" style="width: 300px">
+							<f:selectItem itemLabel="Escolha um tipo de processo" itemValue=""/>
+							<f:selectItems value="#{cadastroEtapa.listaTipoProcesso}"/>
+						</p:selectOneMenu>
+						
+						<p:outputLabel for="setor" value="* Setor: "/>
+						<p:selectOneMenu id="setor" value="#{cadastroEtapa.etapa.setor}" style="width: 300px">
+							<f:selectItem itemLabel="Escolha um setor" itemValue=""/>
+							<f:selectItems value="#{cadastroEtapa.listaSetor}"/>
+						</p:selectOneMenu>
+						
+						<p:outputLabel for="nrSequencia" value="* Sequência: "/>
+						<p:spinner id="nrSequencia" size="2" min="0" max="99" value="#{cadastroEtapa.etapa.nrSequencia}"/>
+						
+						<p:outputLabel for="permiteAnexo" value="* Permite anexo?"/>
+						<p:selectOneRadio id="permiteAnexo" value="#{cadastroEtapa.etapa.permiteAnexo}">
+							<f:selectItem itemLabel="Sim" itemValue="true"/>
+							<f:selectItem itemLabel="Não" itemValue="false"/>
+						</p:selectOneRadio>
+						
+						<p:outputLabel for="temParecer" value="* Tem parecer?"/>
+						<p:selectOneRadio id="temParecer" value="#{cadastroEtapa.etapa.temParecer}">
+							<f:selectItem itemLabel="Sim" itemValue="true"/>
+							<f:selectItem itemLabel="Não" itemValue="false"/>
+						</p:selectOneRadio>
+					</h:panelGrid>
+				</p:fieldset>
+				<br/>
+				<div align="left"><h:outputText value="* Campos obrigatórios"/></div>
+				<div align="right">
+					<p:commandButton value="Salvar" action="#{cadastroEtapa.salvarEditarEtapa()}" update=":mainForm:listTabela"
+									 onclick="PF('cadastro').hide()" icon="ui-icon-disk" process=":mainForm:modalCriarEditar"/>
+					&#160;&#160;
+					<p:commandButton value="Cancelar" process="@this" icon="ui-icon-cancel" action="#{cadastroEtapa.fecharModal()}"
+									 onclick="PF('cadastro').hide()"/>
+				</div>
+			</p:dialog>
+			<!-- DIALOG PARA EXCLUSÃO DE ETAPA -->
+			<p:dialog id="modalExcluir" header="Exclusão de etapa" widgetVar="excluir" resizable="false"
+					  closeOnEscape="true" draggable="false" modal="true" visible="#{cadastroEtapa.exibirModal()}">
+				<div align="center">
+					Tem certeza que deseja excluir a etapa "#{cadastroEtapa.etapa.nome}"?
+				</div>
+				<br/><br/>
+				<div align="right">
+					<p:commandButton value="Sim" action="#{cadastroEtapa.excluirEtapa()}" update=":mainForm:listTabela"
+									 onclick="PF('excluir').hide()" process="@this"/>
+					&#160;&#160;
+					<p:commandButton value="Não" process="@this" action="#{cadastroEtapa.fecharModal()}"
+									 onclick="PF('excluir').hide()"/>
+				</div>
+			</p:dialog>
+			
+			<!-- DIALOG PARA ABRIR POPUP DE AJUDA -->
+			<p:dialog id="modalAjuda" widgetVar="ajuda" header="Ajuda" showEffect="scale" hideEffect="scale" closeOnEscape="true" draggable="false" resizable="false" modal="true">
+				<div align="center">
+					Clique no botão 'Novo' para cadastrar uma etapa.<br/> 
+					Para editar ou excluir um registro escolha a opção desejada na coluna ações.
+				</div>
+				<br/>
+				<div align="right">
+					<p:commandButton value="Voltar" onclick="PF('ajuda').hide()" icon="ui-icon-arrowreturnthick-1-w"/>
+				</div>
+			</p:dialog>
+		</h:form>
+	</h:body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		});
+	</script>
+</html>

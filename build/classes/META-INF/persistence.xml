@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="plugin">
+
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Etapa</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Setor</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.TipoProcesso</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Pessoa</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.TipoDocumentoAcademico</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Aluno</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Curso</class>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/plugin"/>
+			<property name="javax.persistence.jdbc.user" value="postgres"/>
+			<property name="javax.persistence.jdbc.password" value="admin"/>
+		</properties>
+
+	</persistence-unit>
+
+</persistence>
