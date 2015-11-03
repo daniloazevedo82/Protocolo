@@ -1,0 +1,86 @@
+
+<ui:composition template="/template_base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="head">
+		<h:head>
+			<ui:insert name="head.meta">
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			</ui:insert>
+
+			<ui:insert name="head.title">
+				<title>PLUGIN - Módulo de Planejamento de Horários</title>
+			</ui:insert>
+
+		</h:head>
+	</ui:define>
+
+	<ui:define name="body.content.header">
+		<p:fieldset>
+			<h:graphicImage url="/img/logo_ifba.png" alt="PLUGIN" />
+		</p:fieldset>
+	</ui:define>
+	<ui:define name="body.content.center">
+
+		<p:fieldset id="fieldset" style="max-width: 1000px;">
+			<br></br>
+			<br></br>
+			<h:graphicImage url="/img/logo_pluginverde.png"
+				style="margin-left:420px" alt="Horario" />
+			<br></br>
+			<br></br>
+			<p style="text-align: justify;">A Plataforma Unificada de Gestão
+				Institucional (PLUGIN) é um projeto que visa o desenvolvimento de
+				módulos componentes de software que componham um único sistema de
+				gestão, automatizando as atividades e processos institucionais no
+				IFBA - Campus Vitória da Conquista, no intuito de aumentar a
+				eficiência e eficácia dos processos gerenciais e decisórios.</p>
+
+			<p style="text-align: justify;">O software é resultado de
+				pesquisa desenvolvida na graduação em Sistemas de Informação do
+				IFBA, no âmbito do projeto PLUGIN</p>
+			<br></br>
+			<br></br>
+		</p:fieldset>
+	</ui:define>
+
+	<ui:define name="body.content.right">
+
+
+		<p:messages />
+		<p:panel id="loginPanel" header="Login">
+			<p:focus context="loginPanel" />
+			<h:panelGrid columns="1">
+				<h:panelGroup>
+					<h:outputLabel value="Nome de usuário:" for="username" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText id="username" label="Nome de Usuário" />
+					<p:message for="username" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputLabel value="Senha:" for="password" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:password id="password" label="Senha" />
+					<p:message for="password" />
+				</h:panelGroup>
+				<br></br>
+				<p:commandButton id="login" value="Entrar" />
+			</h:panelGrid>
+		</p:panel>
+		<br></br>
+		<p:panel style="border: none;">
+			<p:commandLink value="Fazer meu cadastro" />
+			<br></br>
+			<p:commandLink value="Esqueci a senha" />
+			<br></br>
+			<p:commandLink value="Não consegue acessar o sistema?" />
+		</p:panel>
+	</ui:define>
+</ui:composition>
+
