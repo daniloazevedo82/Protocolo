@@ -63,4 +63,25 @@ public class AlunoDAO extends DAO{
 		}
 	}
 	
+	public List<Aluno> getListaAlunoAutocomplete(String nome){
+		List<Aluno> listaAluno = new ArrayList<Aluno>();
+		
+		TypedQuery<Aluno> query = em.createQuery("SELECT a "
+												+ "FROM Aluno a "
+												+ "WHERE UPPER(a.nome) LIKE UPPER(:nome) "
+												+ "ORDER BY a.nome asc", Aluno.class);
+		query.setParameter("nome", "%" + nome + "%");
+
+		try {
+			listaAluno = query.getResultList();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			//em.close();
+		}
+		
+		return listaAluno;
+	}
+	
 }

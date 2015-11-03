@@ -1,5 +1,8 @@
 package br.edu.ifba.plugin.protocolo.controle;
 
+import java.util.List;
+
+import br.edu.ifba.plugin.protocolo.bd.beans.Aluno;
 import br.edu.ifba.plugin.protocolo.modelo.ModeloAluno;
 import br.edu.ifba.plugin.protocolo.modelo.ModeloCurso;
 import br.edu.ifba.plugin.protocolo.visao.ICadastroAluno;
@@ -32,6 +35,11 @@ public class ControleAluno {
 	public void carregaListaCursoCombo(){
 		modeloCurso.setCadastroAluno(cadastroAluno);
 		modeloCurso.listarCursoCombo();
+	}
+	
+	public List<Aluno> carregaListaAlunoAutocomplete(String nome){
+		modeloAluno.setCadastroAluno(cadastroAluno);
+		return modeloAluno.carregaListaAlunoAutocomplete(nome);
 	}
 	
 }

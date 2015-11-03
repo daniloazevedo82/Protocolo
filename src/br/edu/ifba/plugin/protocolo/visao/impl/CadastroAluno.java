@@ -19,7 +19,7 @@ import br.edu.ifba.plugin.protocolo.visao.ICadastroAluno;
 @ViewScoped
 public class CadastroAluno implements ICadastroAluno {
 
-	private Aluno aluno;
+	private Aluno aluno = new Aluno();
 	private List<Aluno> listaAluno = new ArrayList<Aluno>();
 	private List<Curso> listaCurso;
 	private CategoriaEnum categoria;
@@ -35,7 +35,7 @@ public class CadastroAluno implements ICadastroAluno {
 		this.aluno = new Aluno();
 		this.sexo = null;
 		this.categoria = null;
-		carregaListaCurso();
+		carregarListaCurso();
 		modal = true;
 	}
 	
@@ -43,7 +43,7 @@ public class CadastroAluno implements ICadastroAluno {
 		this.aluno = aluno;
 		sexo = aluno.getSexo();
 		categoria = aluno.getCategoria();
-		carregaListaCurso();
+		carregarListaCurso();
 		modal = true;
 	}
 	
@@ -61,10 +61,6 @@ public class CadastroAluno implements ICadastroAluno {
 		return categoria;
 	}
 	
-	public CategoriaEnum[] getCategoriaArray(){
-		return CategoriaEnum.values();
-	}
-	
 	public List<Aluno> getListaAluno() {
 		return listaAluno;
 	}
@@ -76,14 +72,6 @@ public class CadastroAluno implements ICadastroAluno {
 	@Override
 	public SexoEnum getSexo() {
 		return sexo;
-	}
-	
-	public SexoEnum[] getSexoArray(){
-		return SexoEnum.values();
-	}
-	
-	public void setSexo(SexoEnum sexo) {
-		this.sexo = sexo;
 	}
 	
 	public void setAluno(Aluno aluno) {
@@ -104,6 +92,18 @@ public class CadastroAluno implements ICadastroAluno {
 		this.listaCurso = listaCurso;
 	}
 	
+	public void setSexo(SexoEnum sexo) {
+		this.sexo = sexo;
+	}
+	
+	public CategoriaEnum[] getCategoriaArray(){
+		return CategoriaEnum.values();
+	}
+	
+	public SexoEnum[] getSexoArray(){
+		return SexoEnum.values();
+	}
+	
 	public void listarAluno(){
 		defineControle().listarAluno();
 	}
@@ -118,7 +118,7 @@ public class CadastroAluno implements ICadastroAluno {
 		listarAluno();
 	}
 	
-	public void carregaListaCurso(){
+	public void carregarListaCurso(){
 		ModeloCurso modeloCurso = new ModeloCurso();
 		ControleAluno controleAluno = new ControleAluno();
 		

@@ -2,8 +2,8 @@ package br.edu.ifba.plugin.protocolo.bd.enumeration;
 
 public enum TipoCargoEnum {
 
-	TIPO_CARGO1 (0, "Tipo Cargo 1"),
-	TIPO_CARGO2 (1, "Tipo Cargo 2");
+	PERMANENTE 		(1, "Cargo Permanente"),
+	COMISSIONADO 	(2, "Cargo Comissionado");
 	
 	protected Integer id;
 	protected String nome;

@@ -5,13 +5,20 @@
 
 	<persistence-unit name="plugin">
 
-		<class>br.edu.ifba.plugin.protocolo.bd.beans.Etapa</class>
-		<class>br.edu.ifba.plugin.protocolo.bd.beans.Setor</class>
-		<class>br.edu.ifba.plugin.protocolo.bd.beans.TipoProcesso</class>
-		<class>br.edu.ifba.plugin.protocolo.bd.beans.Pessoa</class>
-		<class>br.edu.ifba.plugin.protocolo.bd.beans.TipoDocumentoAcademico</class>
 		<class>br.edu.ifba.plugin.protocolo.bd.beans.Aluno</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Arquivo</class>
 		<class>br.edu.ifba.plugin.protocolo.bd.beans.Curso</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.DocumentoRequerimento</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Etapa</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.EtapasProcesso</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Historico</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Pessoa</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Processo</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.ProcessoRequerimentoAcademico</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Setor</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.TipoDocumentoAcademico</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.TipoProcesso</class>
+		<class>br.edu.ifba.plugin.protocolo.bd.beans.Usuario</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

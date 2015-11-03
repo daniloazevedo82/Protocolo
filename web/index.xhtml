@@ -8,16 +8,244 @@
 	<h:head>
 		<title>Protocolo</title>
 	</h:head>
-	<h:body>
-		<h:form id="mainForm">
+	<h:body onload="#{paginaInicial.listar()}">
+		<h:form id="mainForm" enctype="multipart/form-data">
 			<ui:insert name="menu">
 				<ui:include src="/menu.xhtml" />
 			</ui:insert>
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+			<br/>
 			<div align="center">
 				<p:graphicImage url="/img/plugin.png" style="padding-right: 150px;"/>
 				<p:graphicImage url="/img/ifba.jpg" />
 			</div>
+			<br/>
+			<p:panel id="processos" header="Solicitações - #{paginaInicial.nomeSetorSession}" style="margin-bottom:20px">
+				<p:tabView orientation="left">
+					<p:tab title="Em espera">
+						<p:outputPanel id="listaEmEspera">
+							<p:dataTable var="etapasProcesso" value="#{paginaInicial.listaEtapasProcessoEmEspera}" rows="10" paginator="true" paginatorPosition="bottom">
+								<p:column headerText="Protocolo">
+									<p:commandLink id="linkProtocolo" action="#{acompanhamentoSolicitacoes.prepararModalAcompanhamento(etapasProcesso)}" process="@this"
+													update=":mainForm:modalAcompanhamento" style="text-align: center;">
+										<h:outputText value="#{etapasProcesso.processoRequerimentoAcademico.numeroProtocoloString}"/>
+									</p:commandLink>
+								</p:column>
+								
+								<p:column headerText="Data" style="text-align: center;">
+									<h:outputText value="#{etapasProcesso.processoRequerimentoAcademico.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Tipo">
+									<h:outputText value="#{etapasProcesso.processoRequerimentoAcademico.tipoProcesso.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Solicitante">
+									<h:outputText value="#{etapasProcesso.processoRequerimentoAcademico.aluno.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Curso">
+									<h:outputText value="#{etapasProcesso.processoRequerimentoAcademico.aluno.curso.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Etapa">
+									<h:outputText value="#{etapasProcesso.etapa.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Status" style="text-align: center;">
+									<h:outputText value="#{etapasProcesso.status.nome}"/>
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</p:tab>
+					
+					<p:tab title="Da coordenação">
+					
+					</p:tab>
+				</p:tabView>
+			</p:panel>
+			
+			<!-- DIALOG PARA ACOMPANHAMENTO DAS SOLICITAÇÕES PELOS SETORES RESPONSÁVEIS -->
+			<p:dialog id="modalAcompanhamento" widgetVar="acompanhamento" closeOnEscape="false" draggable="false" resizable="false" position="top" 
+						modal="true"  visible="#{acompanhamentoSolicitacoes.exibirModalAcompanhamento()}" width="900px">
+				<p:scrollPanel style="height: 600px;" mode="native">
+					<p:panel style="width: 820px;">
+						<p:fieldset>
+							<h3 align="center">ACOMPANHAMENTO DE SOLICITAÇÕES</h3>
+								<p:fieldset>
+									<h:panelGrid columns="2" style="font-weight: bold;font-size: medium;">
+										<p:outputLabel for="etapaProcessoTemp" value="Número da etapaProcesso: "/>
+										<h:outputText id="etapaProcessoTemp" value="#{acompanhamentoSolicitacoes.etapasProcesso.id}"/>
+										
+										<p:outputLabel for="numeroProtocolo" value="Número do protocolo: "/>
+										<h:outputText id="numeroProtocolo" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.numeroProtocoloString}"/>
+	
+										<p:outputLabel for="etapa" value="Etapa: "/>
+										<h:outputText id="etapa" value="#{acompanhamentoSolicitacoes.etapasProcesso.etapa.stringNumeroEtapa}"/>
+									</h:panelGrid>
+								</p:fieldset>
+								<h:panelGrid columns="2">
+									<p:outputLabel for="alunoSolicitante" value="Solicitante: "/>
+									<h:outputText id="alunoSolicitante" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.aluno.nome}"/>
+									
+									<p:outputLabel for="alunoMatricula" value="Matrícula: "/>
+									<h:outputText id="alunoMatricula" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.aluno.matricula}"/>
+									
+									<p:outputLabel for="alunoCurso" value="Curso: "/>
+									<h:outputText id="alunoCurso" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.aluno.curso.nome}"/>
+									
+									<p:outputLabel for="tipoProcesso" value="Tipo de processo: "/>
+									<h:outputText id="tipoProcesso" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.tipoProcesso.nome}"/>
+									
+									<p:outputLabel for="dataProcesso" value="Data: "/>
+									<h:outputText id="dataProcesso" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</h:panelGrid>
+						</p:fieldset>
+						<br />
+						<p:separator />
+						<br />
+						
+						<h:panelGrid columns="2">
+							<h:panelGrid columns="1">
+								<p:outputLabel for="statusProcesso" value="Status: "/>
+								<p:selectOneMenu id="statusProcesso" value="#{acompanhamentoSolicitacoes.status}" style="width: 200px">
+									<f:selectItem itemLabel="Escolha um status" itemValue=""/>
+									<f:selectItems value="#{acompanhamentoSolicitacoes.getStatusArray()}"/>
+								</p:selectOneMenu>
+							</h:panelGrid>
+							<h:panelGrid columns="1">
+								<p:outputLabel for="parecerProcesso" value="Parecer: " rendered="#{acompanhamentoSolicitacoes.etapasProcesso.etapa.temParecer}"/>
+								<p:selectOneMenu id="parecerProcesso" value="#{acompanhamentoSolicitacoes.parecer}" rendered="#{acompanhamentoSolicitacoes.etapasProcesso.etapa.temParecer}" 
+												style="width: 200px">
+									<f:selectItem itemLabel="Escolha um status" itemValue=""/>
+									<f:selectItems value="#{acompanhamentoSolicitacoes.getParecerArray()}"/>
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="justificativaAcompanhamento" value="Justificativa / observações: "/><p:panel visible="false"></p:panel>
+							<p:inputTextarea id="justificativaAcompanhamento" value="#{acompanhamentoSolicitacoes.observacaoAtual}" autoResize="false"
+											 rows="5" cols="100" counter="display" maxlength="1000" counterTemplate="{0} caracteres restantes."/>
+							<p:panel visible="false"></p:panel>
+		    				<h:outputText id="display" />
+						</h:panelGrid>
+						<br/>
+						
+						<p:panel rendered="#{acompanhamentoSolicitacoes.etapasProcesso.etapa.permiteAnexo}">
+							<p:fieldset id="anexar" legend="Anexar documento">
+								<h:panelGrid columns="2">
+									<h:panelGrid columns="1">
+										<p:outputLabel for="documento" value="Documento: "/>
+										<p:selectOneMenu id="documento" value="#{acompanhamentoSolicitacoes.documentoRequerimento.tipoDocumentoAcademico}" style="width: 300px">
+											<f:selectItem itemLabel="Escolha um documento" itemValue=""/>
+											<f:selectItems value="#{acompanhamentoSolicitacoes.listaTipoDocumentoAcademico}"/>
+										</p:selectOneMenu>
+									</h:panelGrid>
+									<h:panelGrid columns="2">
+										<p:fileUpload value="#{acompanhamentoSolicitacoes.file}" mode="advanced" label="Escolher arquivo" auto="true" multiple="false"
+												  fileUploadListener="#{acompanhamentoSolicitacoes.uploadList}" skinSimple="true" update=":mainForm:nomeAnexo"/>
+										<h:outputText id="nomeAnexo" value="#{acompanhamentoSolicitacoes.arquivo.nome}"/>
+									</h:panelGrid>
+									<p:commandButton value="Anexar" action="#{acompanhamentoSolicitacoes.anexarArquivos()}" ajax="false" update=":mainForm:anexos"
+											 icon="ui-icon-document" process=":mainForm:anexar" validateClient="true"/>
+								</h:panelGrid>
+							</p:fieldset>
+							<p:outputPanel id="listAnexos" style="padding-top: 20px;">
+								<p:dataTable rows="5" var="anexos" value="#{acompanhamentoSolicitacoes.listaDocumentoRequerimento}" emptyMessage="Não existem anexos." paginator="true" paginatorPosition="bottom">
+									<p:column headerText="Documento">
+										<h:outputText value="#{anexos.tipoDocumentoAcademico.nome}"/>
+									</p:column>
+									
+									<p:column headerText="Anexo">
+									       <h:outputText value="#{anexos.arquivo.nome}"/>
+									</p:column>
+									
+									<p:column headerText="Ações" style="width: 10%; text-align: center;">
+										<p:commandLink process="@this" update=":mainForm:listAnexos"
+													   action="#{acompanhamentoSolicitacoes.excluirAnexo(anexos)}">
+											<p:graphicImage value="/img/btnExcluir.png" id="btnExcluir"/>
+											<p:tooltip for="btnExcluir" value="Excluir"/>
+											<f:setPropertyActionListener value="#{documentoRequerimento}" target="#{acompanhamentoSolicitacoes.documentoRequerimento}" />
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</p:panel>
+						
+						<div align="right">
+							<p:commandButton value="Salvar" action="#{acompanhamentoSolicitacoes.salvarAcompanhamento()}" update=":mainForm:processos" ajax="false"
+											 onclick="PF('acompanhamento').hide()" icon="ui-icon-disk" process=":mainForm:modalAnexos" validateClient="true"/>
+							&#160;&#160;
+							<p:commandButton value="Cancelar" process="@this" icon="ui-icon-cancel" action="#{acompanhamentoSolicitacoes.fecharModalAcompanhamento()}"
+											 onclick="PF('acompanhamento').hide()"/>
+						</div>
+						<br/>
+						
+						<!-- Tabs com as etapas e o histórico -->
+						<p:tabView id="etapaHistorico">
+							<p:tab id="etapas" title="Etapas">
+								<p:dataTable rows="10" var="etapasProcesso" value="#{acompanhamentoSolicitacoes.listaEtapasProcesso}" paginator="true" paginatorPosition="bottom">
+									<p:column headerText="Nº">
+										<h:outputText value="#{etapasProcesso.etapa.nrSequencia}"/>
+									</p:column>
+									<p:column headerText="Etapa">
+										<h:outputText value="#{etapasProcesso.etapa.nome}"/>
+									</p:column>
+									<p:column headerText="Setor">
+										<h:outputText value="#{etapasProcesso.etapa.setor.nome}"/>
+									</p:column>
+									<p:column headerText="Status">
+										<h:outputText value="#{etapasProcesso.status.nome}"/>
+									</p:column>
+									<p:column headerText="Data">
+										<h:outputText value="#{etapasProcesso.dataFim}">
+											<f:convertDateTime pattern="dd/MM/yyyy"/>
+										</h:outputText>
+									</p:column>
+								</p:dataTable>
+							</p:tab>
+							
+							<p:tab id="historico" title="Historico">
+								<p:dataTable rows="10" var="historicoProcesso" value="#{acompanhamentoSolicitacoes.listaHistorico}" paginator="true" paginatorPosition="bottom">
+									<p:column headerText="Data e hora">
+										<h:outputText value="#{historicoProcesso.dataHoraInicio}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Descrição">
+										<h:outputText value="#{historicoProcesso.descricao}"/>
+									</p:column>
+									<p:column headerText="Observação">
+										<h:outputText value="#{historicoProcesso.observacao}"/>
+									</p:column>
+									<p:column headerText="Parecer" style="text-align: center;">
+										<h:outputText value="#{historicoProcesso.parecer.nome}"/>
+									</p:column>
+									<p:column headerText="Status">
+										<h:outputText value="#{historicoProcesso.etapasProcesso.status.nome}"/>
+									</p:column>
+									
+								</p:dataTable>
+							</p:tab>
+							
+							<p:tab id="anexos" title="Anexos">
+								<p:dataTable rows="10" var="arquivosProcesso" value="#{acompanhamentoSolicitacoes.listaDocumentoRequerimentoAnterior}" paginator="true" paginatorPosition="bottom">
+									<p:column headerText="Documento">
+										<h:outputText value="#{arquivosProcesso.tipoDocumentoAcademico.nome}"/>
+									</p:column>
+									
+									<p:column headerText="Arquivo">
+										<h:outputText value="#{arquivosProcesso.arquivo.nome}"/>
+									</p:column>
+								</p:dataTable>
+							</p:tab>
+						</p:tabView>
+					</p:panel>
+				</p:scrollPanel>
+			</p:dialog>
 		</h:form>
 	</h:body>
 </html>

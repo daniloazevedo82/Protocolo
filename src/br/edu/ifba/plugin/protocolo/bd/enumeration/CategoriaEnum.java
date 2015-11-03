@@ -3,8 +3,9 @@ package br.edu.ifba.plugin.protocolo.bd.enumeration;
 public enum CategoriaEnum {
 
 	ALUNO 					(1, "Aluno"),
-	PROFESSOR 				(2, "Professor"),
-	TECNICO_ADMINISTRATIVO 	(3, "Técnico Administrativo");
+	TECNICO_ADMINISTRATIVO 	(2, "Técnico Administrativo"),
+	PROFESSOR_EBTT 			(3, "Professor EBTT"),
+	PROFESSOR_NS 			(4, "Professor Nível Superior");
 	
 	protected Integer id;
 	protected String nome;

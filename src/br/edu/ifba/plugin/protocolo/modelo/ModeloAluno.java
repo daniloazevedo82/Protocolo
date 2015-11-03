@@ -35,4 +35,7 @@ public class ModeloAluno {
 		alunoDAO.deleteAluno(cadastroAluno.getAluno());
 	}
 	
+	public List<Aluno> carregaListaAlunoAutocomplete(String nome){
+		return alunoDAO.getListaAlunoAutocomplete(nome);
+	}
 }

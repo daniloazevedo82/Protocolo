@@ -3,12 +3,14 @@ package br.edu.ifba.plugin.protocolo.conversores;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
 import org.apache.commons.lang3.StringUtils;
 
 import br.edu.ifba.plugin.protocolo.bd.beans.Etapa;
 import br.edu.ifba.plugin.protocolo.bd.conexao.ConexaoBD;
 
+@FacesConverter(forClass = Etapa.class)
 public class ConverterEtapa implements Converter{
 
 	@Override

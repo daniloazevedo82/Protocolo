@@ -4,6 +4,7 @@ import br.edu.ifba.plugin.protocolo.modelo.ModeloEtapa;
 import br.edu.ifba.plugin.protocolo.modelo.ModeloSetor;
 import br.edu.ifba.plugin.protocolo.modelo.ModeloTipoProcesso;
 import br.edu.ifba.plugin.protocolo.visao.ICadastroEtapa;
+import br.edu.ifba.plugin.protocolo.visao.ICadastroRequerimento;
 
 public class ControleEtapa {
 
@@ -11,11 +12,13 @@ public class ControleEtapa {
 	private ModeloEtapa modeloEtapa;
 	private ModeloSetor modeloSetor;
 	private ModeloTipoProcesso modeloTipoProcesso;
+	private ICadastroRequerimento cadastroRequerimento;
 	
 	public void setCadastroEtapa(ICadastroEtapa cadastroEtapa) {this.cadastroEtapa = cadastroEtapa;}
 	public void setModeloEtapa(ModeloEtapa modeloEtapa) {this.modeloEtapa = modeloEtapa;}
 	public void setModeloSetor(ModeloSetor modeloSetor) {this.modeloSetor = modeloSetor;}
 	public void setModeloTipoProcesso(ModeloTipoProcesso modeloTipoProcesso) {this.modeloTipoProcesso = modeloTipoProcesso;}
+	public void setCadastroRequerimento(ICadastroRequerimento cadastroRequerimento) {this.cadastroRequerimento = cadastroRequerimento;}
 	
 	public void listarEtapas(){
 		modeloEtapa.setCadastroEtapa(cadastroEtapa);
@@ -40,6 +43,16 @@ public class ControleEtapa {
 	public void carregaListaTipoProcessoCombo(){
 		modeloTipoProcesso.setCadastroEtapa(cadastroEtapa);
 		modeloTipoProcesso.listarTipoProcessoCombo();
+	}
+	
+	public void carregaEtapaCadastroRequerimento(){
+		modeloEtapa.setCadastroRequerimento(cadastroRequerimento);
+		modeloEtapa.carregaEtapaCadastroRequerimento();
+	}
+	
+	public void carregaListaEtapaCadastroRequerimento(){
+		modeloEtapa.setCadastroRequerimento(cadastroRequerimento);
+		modeloEtapa.carregaListaEtapaCadastroRequerimento();
 	}
 	
 }

@@ -36,15 +36,15 @@ public class CadastroEtapa implements ICadastroEtapa{
 	
 	public void prepararNovo(){
 		this.etapa = new Etapa();
-		carregaListaSetor();
-		carregaListaTipoProcesso();
+		carregarListaSetor();
+		carregarListaTipoProcesso();
 		modal = true;
 	}
 	
 	public void prepararEditar(Etapa etapa){
 		this.etapa = etapa;
-		carregaListaSetor();
-		carregaListaTipoProcesso();
+		carregarListaSetor();
+		carregarListaTipoProcesso();
 		modal = true;
 	}
 	
@@ -104,7 +104,7 @@ public class CadastroEtapa implements ICadastroEtapa{
 		listarEtapas();
 	}
 	
-	public void carregaListaSetor(){
+	public void carregarListaSetor(){
 		ModeloSetor modeloSetor = new ModeloSetor();
 		ControleEtapa controleEtapa = new ControleEtapa();
 		
@@ -114,7 +114,7 @@ public class CadastroEtapa implements ICadastroEtapa{
 		controleEtapa.carregaListaSetorCombo();
 	}
 	
-	public void carregaListaTipoProcesso(){
+	public void carregarListaTipoProcesso(){
 		ModeloTipoProcesso modeloTipoProcesso = new ModeloTipoProcesso();
 		ControleEtapa controleEtapa = new ControleEtapa();
 		

@@ -2,11 +2,11 @@ package br.edu.ifba.plugin.protocolo.bd.enumeration;
 
 public enum StatusEnum {
 
-	EM_ESPERA 			(0, "Em espera"),
-	EM_ANDAMENTO 		(1, "Em andamento"),
-	CONCLUIDO 			(2, "Concluído"),
-	EM_AGUARDO 			(3, "Em aguardo"),
-	AGUARDANDO_RESPOSTA	(4, "Aguardando resposta");
+	NAO_INICIADO 			(0, "Não iniciado"),
+	EM_ESPERA 				(1, "Em espera"),
+	EM_ANDAMENTO 			(2, "Em andamento"),
+	AGUARDANDO_RESPOSTA 	(3, "Aguardando resposta"),
+	CONCLUIDO				(4, "Concluído");
 	
 	protected Integer id;
 	protected String nome;

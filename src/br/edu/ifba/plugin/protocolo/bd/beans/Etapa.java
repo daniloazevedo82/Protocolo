@@ -24,6 +24,7 @@ public class Etapa {
 	private Boolean permiteAnexo = false;
 	private Setor setor;
 	private TipoProcesso tipoProcesso;
+	private Boolean ultimaEtapa = false;
 	//protected Cargo cargoAutorizador FIXME Ver como vai ficar a relação com cargo
 	
 	public Etapa(){
@@ -77,6 +78,10 @@ public class Etapa {
 	public TipoProcesso getTipoProcesso() {
 		return tipoProcesso;
 	}
+	
+	public Boolean getUltimaEtapa() {
+		return ultimaEtapa;
+	}
 
 	//SETTERS
 	public void setId(Integer id) {
@@ -107,6 +112,10 @@ public class Etapa {
 		this.tipoProcesso = tipoProcesso;
 	}
 	
+	public void setUltimaEtapa(Boolean ultimaEtapa) {
+		this.ultimaEtapa = ultimaEtapa;
+	}
+	
 	public String getTemParecerString(){
 		if(temParecer != null && temParecer){
 			return "Sim";
@@ -123,6 +132,10 @@ public class Etapa {
 		}
 	}
 
+	public String getStringNumeroEtapa(){
+		return nrSequencia.toString() + "- " + nome;
+	}
+	
 	@Override
 	public String toString() {
 		return nome;
