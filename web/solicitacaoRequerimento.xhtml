@@ -39,7 +39,7 @@
 											var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno}">
 								<p:ajax event="itemSelect" update="curso"/>
 							</p:autoComplete>
-							<p:commandButton icon="ui-icon-trash" action="#{cadastroRequerimento.clearAutocomplete()}" update="aluno, curso"/>
+							<p:commandButton icon="ui-icon-trash" action="#{cadastroRequerimento.clearAutocomplete()}" ajax="false" update="aluno, curso"/>
 							<p:commandButton id="btnNovo" process="@this" icon="ui-icon-plusthick" update=":mainForm:modalCriarEditarAluno" 
 									 action="#{cadastroAluno.prepararNovo()}"/>
 						</h:panelGrid>

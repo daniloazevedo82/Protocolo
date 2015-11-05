@@ -23,7 +23,8 @@
 				<p:tabView orientation="left">
 					<p:tab title="Em espera">
 						<p:outputPanel id="listaEmEspera">
-							<p:dataTable var="etapasProcesso" value="#{paginaInicial.listaEtapasProcessoEmEspera}" rows="10" paginator="true" paginatorPosition="bottom">
+							<p:dataTable var="etapasProcesso" value="#{paginaInicial.listaEtapasProcessoEmEspera}" emptyMessage="Não existem solicitações." 
+										 rows="10" paginator="true" paginatorPosition="bottom">
 								<p:column headerText="Protocolo">
 									<p:commandLink id="linkProtocolo" action="#{acompanhamentoSolicitacoes.prepararModalAcompanhamento(etapasProcesso)}" process="@this"
 													update=":mainForm:modalAcompanhamento" style="text-align: center;">
@@ -60,7 +61,7 @@
 						</p:outputPanel>
 					</p:tab>
 					
-					<p:tab title="Da coordenação">
+					<p:tab title="Da coordenação" rendered="#{paginaInicial.isCoordenacao}">
 					
 					</p:tab>
 				</p:tabView>

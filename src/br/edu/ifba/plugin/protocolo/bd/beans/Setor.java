@@ -12,19 +12,20 @@ import javax.persistence.Table;
 @SequenceGenerator(name="sq_setor", sequenceName="sq_setor", schema="administrativo", allocationSize=1)
 public class Setor {
 
-	public static final Setor PROTOCOLO = new Setor(1, "Protocolo");
-	public static final Setor DEN = new Setor(2, "DEN");
-	public static final Setor DG = new Setor(3, "DG");
-	public static final Setor DIREH = new Setor(4, "DIREH");
-	public static final Setor PLANEJAMENTO = new Setor(5, "Planejamento");
-	public static final Setor DAP = new Setor(6, "DAP");
-	public static final Setor SETOR_COMPRAS = new Setor(7, "Setor de compras");
-	public static final Setor CORES = new Setor(8, "CORES");
-	public static final Setor CSI = new Setor(9, "Coordenação de BSI");
-	public static final Setor COINFO = new Setor(10, "Coordenação de Informática");
+	public static final Setor PROTOCOLO = new Setor(1, "Protocolo", false);
+	public static final Setor DEN = new Setor(2, "DEN", false);
+	public static final Setor DG = new Setor(3, "DG", false);
+	public static final Setor DIREH = new Setor(4, "DIREH", false);
+	public static final Setor PLANEJAMENTO = new Setor(5, "Planejamento", false);
+	public static final Setor DAP = new Setor(6, "DAP", false);
+	public static final Setor SETOR_COMPRAS = new Setor(7, "Setor de compras", false);
+	public static final Setor CORES = new Setor(8, "CORES", false);
+	public static final Setor CSI = new Setor(9, "Coordenação de BSI", true);
+	public static final Setor COINFO = new Setor(10, "Coordenação de Informática", true);
 	
 	private Integer id;
 	private String nome;
+	private Boolean isCoordenacao;
 	
 	public Setor() {
 	}
@@ -33,9 +34,10 @@ public class Setor {
 		this.id = id;
 	}
 	
-	public Setor(Integer id, String nome) {
+	public Setor(Integer id, String nome, Boolean isCoordenacao) {
 		this.id = id;
 		this.nome = nome;
+		this.isCoordenacao = isCoordenacao;
 	}
 
 	//GETTERS
@@ -48,6 +50,10 @@ public class Setor {
 	public String getNome() {
 		return nome;
 	}
+	
+	public Boolean getIsCoordenacao() {
+		return isCoordenacao;
+	}
 
 	//SETTERS
 	public void setId(Integer id) {
@@ -56,6 +62,10 @@ public class Setor {
 	
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public void setIsCoordenacao(Boolean isCoordenacao) {
+		this.isCoordenacao = isCoordenacao;
 	}
 	
 	@Override

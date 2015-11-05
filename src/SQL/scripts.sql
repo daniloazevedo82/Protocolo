@@ -110,6 +110,7 @@ CREATE TABLE administrativo.setor(
 	id integer,
 	nome character varying,
 	idCoordenador integer,
+	isCoordenacao boolean,
 	CONSTRAINT setor_pk PRIMARY KEY (id)
 );
 
@@ -365,6 +366,7 @@ INSERT INTO administrativo.etapa(id, nome, nrsequencia, permiteanexo, idsetor, i
 
 UPDATE administrativo.etapa set idsetor = 1 where nrsequencia = 1;
 ALTER TABLE administrativo.etapa ADD COLUMN ultimaEtapa boolean DEFAULT false;
+ALTER TABLE administrativo.etapa ADD COLUMN primeiraetapa boolean DEFAULT false;
 
 INSERT INTO administrativo.usuario(id, login, senha, ativo, idsetor) VALUES (nextval('administrativo.sq_usuario'), 'protocolo', '123456', true, 1);
 INSERT INTO administrativo.usuario(id, login, senha, ativo, idsetor) VALUES (nextval('administrativo.sq_usuario'), 'den', '123456', true, 2);

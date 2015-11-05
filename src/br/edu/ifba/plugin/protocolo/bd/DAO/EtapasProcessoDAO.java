@@ -27,7 +27,7 @@ public class EtapasProcessoDAO extends DAO{
 												+ " AND ep.status = :status "
 												+ " ORDER BY pr.data desc, pr.id desc", EtapasProcesso.class);
 		
-		query.setParameter("status", StatusEnum.CONCLUIDO);
+		query.setParameter("status", StatusEnum.EM_ESPERA);
 
 		try {
 			listaEtapasProcesso = query.getResultList();

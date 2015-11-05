@@ -25,6 +25,7 @@ public class Etapa {
 	private Setor setor;
 	private TipoProcesso tipoProcesso;
 	private Boolean ultimaEtapa = false;
+	private Boolean primeiraEtapa = false;
 	//protected Cargo cargoAutorizador FIXME Ver como vai ficar a relação com cargo
 	
 	public Etapa(){
@@ -82,6 +83,10 @@ public class Etapa {
 	public Boolean getUltimaEtapa() {
 		return ultimaEtapa;
 	}
+	
+	public Boolean getPrimeiraEtapa() {
+		return primeiraEtapa;
+	}
 
 	//SETTERS
 	public void setId(Integer id) {
@@ -114,6 +119,10 @@ public class Etapa {
 	
 	public void setUltimaEtapa(Boolean ultimaEtapa) {
 		this.ultimaEtapa = ultimaEtapa;
+	}
+	
+	public void setPrimeiraEtapa(Boolean primeiraEtapa) {
+		this.primeiraEtapa = primeiraEtapa;
 	}
 	
 	public String getTemParecerString(){
@@ -149,9 +158,11 @@ public class Etapa {
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((nrSequencia == null) ? 0 : nrSequencia.hashCode());
 		result = prime * result + ((permiteAnexo == null) ? 0 : permiteAnexo.hashCode());
+		result = prime * result + ((primeiraEtapa == null) ? 0 : primeiraEtapa.hashCode());
 		result = prime * result + ((setor == null) ? 0 : setor.hashCode());
 		result = prime * result + ((temParecer == null) ? 0 : temParecer.hashCode());
 		result = prime * result + ((tipoProcesso == null) ? 0 : tipoProcesso.hashCode());
+		result = prime * result + ((ultimaEtapa == null) ? 0 : ultimaEtapa.hashCode());
 		return result;
 	}
 
@@ -184,6 +195,11 @@ public class Etapa {
 				return false;
 		} else if (!permiteAnexo.equals(other.permiteAnexo))
 			return false;
+		if (primeiraEtapa == null) {
+			if (other.primeiraEtapa != null)
+				return false;
+		} else if (!primeiraEtapa.equals(other.primeiraEtapa))
+			return false;
 		if (setor == null) {
 			if (other.setor != null)
 				return false;
@@ -199,7 +215,12 @@ public class Etapa {
 				return false;
 		} else if (!tipoProcesso.equals(other.tipoProcesso))
 			return false;
+		if (ultimaEtapa == null) {
+			if (other.ultimaEtapa != null)
+				return false;
+		} else if (!ultimaEtapa.equals(other.ultimaEtapa))
+			return false;
 		return true;
 	}
-	
+
 }

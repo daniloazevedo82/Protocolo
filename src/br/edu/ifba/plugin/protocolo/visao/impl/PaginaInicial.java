@@ -26,7 +26,10 @@ public class PaginaInicial implements IPaginaInicial{
 	Integer idusuariologado = 1;
 	int idSetorSession;
 	String nomeSetorSession;
+	Boolean isCoordenacao = false;
 	public String getNomeSetorSession() {return nomeSetorSession;}
+	public Boolean getIsCoordenacao() {return isCoordenacao;}
+	public int getIdSetorSession() {return idSetorSession;}
 	
 	private EtapasProcessoDAO processoDAO = new EtapasProcessoDAO();
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -94,6 +97,7 @@ public class PaginaInicial implements IPaginaInicial{
 		HttpSession session = (HttpSession) request.getSession();
 		idSetorSession = (int) session.getAttribute("ID_SETOR");
 		nomeSetorSession = (String) session.getAttribute("NOME_SETOR");
+		isCoordenacao = (boolean) session.getAttribute("IS_COORDENACAO");
 		listarEmEspera();
 		listarDaCoordenacao();
 	}
@@ -112,6 +116,7 @@ public class PaginaInicial implements IPaginaInicial{
 			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
 			session.setAttribute("ID_SETOR", setor.getId());
 			session.setAttribute("NOME_SETOR", setor.getNome());
+			session.setAttribute("IS_COORDENACAO", setor.getIsCoordenacao());
 			context.getExternalContext().redirect("index.ifba");
 		} catch (IOException e) {
 			e.printStackTrace();

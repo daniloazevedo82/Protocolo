@@ -11,13 +11,18 @@
 	<h:body>
 		<h:form id="mainForm" enctype="multipart/form-data">
 			<p:layout fullPage="true">
-				<p:layoutUnit position="north" size="150">
+				<p:layoutUnit position="north" size="155">
 					<div align="left">
-						<p:graphicImage url="/img/ifba.jpg"/>
+						<h:panelGrid columns="2">
+							<p:graphicImage url="/img/ifba.jpg" style="padding-right: 150px;"/>
+							<p:panel><h2 style="color: green;">Módulo Requerimento Acadêmico</h2></p:panel>
+						</h:panelGrid>
 					</div>
 				</p:layoutUnit>
 				<p:layoutUnit position="west" size="250">
-			        Reservado para links institucionais a definir.
+			        <p:fieldset legend="Institucional">
+			        
+			        </p:fieldset>
 			    </p:layoutUnit>
 			    <p:layoutUnit position="east" size="350" style="padding-top: 50px;">
 			        <p:fieldset id="validaLogin" legend="Login">
@@ -28,6 +33,7 @@
 				        	<p:outputLabel for="senha" value="Senha:"/>
 				        	<p:inputText id="senha" type="password" value="#{paginaInicial.senha}" style="width: 250px;"/>
 				        </h:panelGrid>
+				        <br/>
 				        <div align="center">
 				        	<p:commandButton value="Entrar" action="#{paginaInicial.login()}" ajax="false"
 											 icon="ui-icon-home" process=":mainForm:validaLogin"/>
@@ -36,7 +42,7 @@
 			    </p:layoutUnit>
 				<p:layoutUnit position="center">
 			        <div align="center">
-						<p:graphicImage url="/img/plugin.png" style="padding-top: 50px;"/>
+						<p:graphicImage url="/img/plugin.png" style="padding-top: 50px;padding-bottom: 20px;"/>
 					</div>
 					<p style="text-align: justify;padding-left: 20px;padding-right: 20px;">
 						A Plataforma Unificada de Gestão
@@ -53,7 +59,7 @@
 			    <p:layoutUnit position="south" size="100">
 			        © 2015 Bacharelado em Sistemas de Informação - BSI - IFBA<br/>
 			        Desenvolvimento: Danilo Guimarães Souza Azevedo <br/>
-			        Orientadores: Prof. Msc Bruno Silvério Costa e Prof. Msc. Aline Silva Costa
+			        Orientadores: Prof. Msc Bruno Silvério Costa e Profa. Msc. Aline Silva Costa
 			    </p:layoutUnit>
 			</p:layout>
 		</h:form>

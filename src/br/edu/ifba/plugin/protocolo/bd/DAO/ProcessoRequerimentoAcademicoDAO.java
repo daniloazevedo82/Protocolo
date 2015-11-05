@@ -48,16 +48,17 @@ public class ProcessoRequerimentoAcademicoDAO extends DAO {
 			for(EtapasProcesso item : listaEtapasProcesso){
 				em.persist(item);
 				
-				Historico historico = new Historico();
-				historico.setEtapasProcesso(item);
-				historico.setDataHoraInicio(new Timestamp(System.currentTimeMillis()));
-				historico.setDescricao("Etapa " + item.getEtapa().getStringNumeroEtapa() + " / Status " + item.getStatus().getNome());
-				historico.setObservacao(item.getProcessoRequerimentoAcademico().getObservacoes());
-				if(item.getParecer() != null){
-					historico.setParecer(item.getParecer());
+				if(item.getEtapa().getPrimeiraEtapa()){
+					Historico historico = new Historico();
+					historico.setEtapasProcesso(item);
+					historico.setDataHoraInicio(new Timestamp(System.currentTimeMillis()));
+					historico.setDescricao("Processo " + item.getProcessoRequerimentoAcademico().getTipoProcesso().getNome() + " criado.");
+					historico.setObservacao(item.getProcessoRequerimentoAcademico().getObservacoes());
+					if(item.getParecer() != null){
+						historico.setParecer(item.getParecer());
+					}
+					em.persist(historico);
 				}
-				
-				em.persist(historico);
 			}
 			
 			commitTransacao();
