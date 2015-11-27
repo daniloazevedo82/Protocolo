@@ -38,7 +38,7 @@ public class PaginaInicial implements IPaginaInicial{
 	
 	private Setor setor = new Setor();
 	private List<EtapasProcesso> listaEtapasProcessoEmEspera;
-	private List<EtapasProcesso> listaEtapasProcessoDaCoordenacao;
+	private List<EtapasProcesso> listaEtapasProcessoNaoIniciados;
 	private String login;
 	private String senha;
 	
@@ -48,8 +48,8 @@ public class PaginaInicial implements IPaginaInicial{
 	public List<EtapasProcesso> getListaEtapasProcessoEmEspera() {
 		return listaEtapasProcessoEmEspera;
 	}
-	public List<EtapasProcesso> getListaEtapasProcessoDaCoordenacao() {
-		return listaEtapasProcessoDaCoordenacao;
+	public List<EtapasProcesso> getListaEtapasProcessoNaoIniciados() {
+		return listaEtapasProcessoNaoIniciados;
 	}
 	public String getLogin() {
 		return login;
@@ -66,8 +66,8 @@ public class PaginaInicial implements IPaginaInicial{
 		this.listaEtapasProcessoEmEspera = listaEtapasProcessoEmEspera;
 	}
 	@Override
-	public void setListaEtapasProcessoDaCoordenacao(List<EtapasProcesso> listaEtapasProcessoDaCoordenacao) {
-		this.listaEtapasProcessoDaCoordenacao = listaEtapasProcessoDaCoordenacao;
+	public void setListaEtapasProcessoNaoIniciados(List<EtapasProcesso> listaEtapasProcessoNaoIniciados) {
+		this.listaEtapasProcessoNaoIniciados = listaEtapasProcessoNaoIniciados;
 	}
 	public void setLogin(String login) {
 		this.login = login;
@@ -99,15 +99,22 @@ public class PaginaInicial implements IPaginaInicial{
 		nomeSetorSession = (String) session.getAttribute("NOME_SETOR");
 		isCoordenacao = (boolean) session.getAttribute("IS_COORDENACAO");
 		listarEmEspera();
-		listarDaCoordenacao();
+		listarNaoIniciados();
 	}
 	
 	public void listarEmEspera(){
 		listaEtapasProcessoEmEspera = processoDAO.getListagemEtapasProcesso(idusuariologado, idSetorSession);
 	}
 	
-	public void listarDaCoordenacao(){
-		
+	public void listarNaoIniciados(){
+		listaEtapasProcessoNaoIniciados = processoDAO.getListagemEtapasProcessoNaoIniciado(idusuariologado, idSetorSession);
+		if(listaEtapasProcessoNaoIniciados != null && !listaEtapasProcessoNaoIniciados.isEmpty()){
+			for(EtapasProcesso item : listaEtapasProcessoNaoIniciados){
+				int index = listaEtapasProcessoNaoIniciados.indexOf(item);
+				EtapasProcesso processoAux = processoDAO.getLocalizacaoProcesso(item);
+				listaEtapasProcessoNaoIniciados.get(index).setLocalizacao(processoAux.getEtapa().getSetor());
+			}
+		}
 	}
 	
 	public void redirecionarTelaInicial(){  

@@ -24,7 +24,8 @@
 				
 				<div align="center">
 				<p:outputPanel id="listTabela" style="padding-top: 50px;">
-					<p:dataTable rows="10" var="tipoDocumentoAcademico" value="#{cadastroTipoDocumentoAcademico.listaTipoDocumentoAcademico}" style="width: 800px; "
+					<p:dataTable rows="10" var="tipoDocumentoAcademico" value="#{cadastroTipoDocumentoAcademico.listaTipoDocumentoAcademico}" 
+								 style="width: 800px; "
 								 emptyMessage="Não existe tipo de documento acadêmico cadastrado" paginator="true" paginatorPosition="bottom">
 						<p:column headerText="Id" sortBy="#{tipoDocumentoAcademico.id}" width="100px;" style="text-align: center;">
 							<h:outputText value="#{tipoDocumentoAcademico.id}"/>
@@ -37,7 +38,8 @@
 										   action="#{cadastroTipoDocumentoAcademico.prepararEditar(tipoDocumentoAcademico)}">
 								<p:graphicImage value="/img/btnEditar.png" id="btnEditar"/>
 								<p:tooltip for="btnEditar" value="Editar"/>
-								<f:setPropertyActionListener value="#{tipoDocumentoAcademico}" target="#{cadastroTipoDocumentoAcademico.tipoDocumentoAcademico}" />
+								<f:setPropertyActionListener value="#{tipoDocumentoAcademico}" 
+								target="#{cadastroTipoDocumentoAcademico.tipoDocumentoAcademico}" />
 							</p:commandLink>
 							
 							&#160;&#160;
@@ -46,7 +48,8 @@
 										   action="#{cadastroTipoDocumentoAcademico.prepararEditar(tipoDocumentoAcademico)}">
 								<p:graphicImage value="/img/btnExcluir.png" id="btnExcluir"/>
 								<p:tooltip for="btnExcluir" value="Excluir"/>
-								<f:setPropertyActionListener value="#{tipoDocumentoAcademico}" target="#{cadastroTipoDocumentoAcademico.tipoDocumentoAcademico}" />
+								<f:setPropertyActionListener value="#{tipoDocumentoAcademico}" 
+								target="#{cadastroTipoDocumentoAcademico.tipoDocumentoAcademico}" />
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>

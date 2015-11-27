@@ -23,7 +23,7 @@
 				<p:tabView orientation="left">
 					<p:tab title="Em espera">
 						<p:outputPanel id="listaEmEspera">
-							<p:dataTable var="etapasProcesso" value="#{paginaInicial.listaEtapasProcessoEmEspera}" emptyMessage="Não existem solicitações." 
+							<p:dataTable var="etapasProcesso" value="#{paginaInicial.listaEtapasProcessoEmEspera}" emptyMessage="Não existem solicitações em espera." 
 										 rows="10" paginator="true" paginatorPosition="bottom">
 								<p:column headerText="Protocolo">
 									<p:commandLink id="linkProtocolo" action="#{acompanhamentoSolicitacoes.prepararModalAcompanhamento(etapasProcesso)}" process="@this"
@@ -61,24 +61,62 @@
 						</p:outputPanel>
 					</p:tab>
 					
-					<p:tab title="Da coordenação" rendered="#{paginaInicial.isCoordenacao}">
-					
+					<p:tab title="Previstos">
+						<p:outputPanel id="listaPrevistos">
+							<p:dataTable var="etapasProcessoPrevistos" value="#{paginaInicial.listaEtapasProcessoNaoIniciados}" emptyMessage="Não existem solicitações não iniciadas." 
+										 rows="10" paginator="true" paginatorPosition="bottom">
+								<p:column headerText="Protocolo">
+									<h:outputText value="#{etapasProcessoPrevistos.processoRequerimentoAcademico.numeroProtocoloString}"/>
+								</p:column>
+								
+								<p:column headerText="Data" style="text-align: center;">
+									<h:outputText value="#{etapasProcessoPrevistos.processoRequerimentoAcademico.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Tipo">
+									<h:outputText value="#{etapasProcessoPrevistos.processoRequerimentoAcademico.tipoProcesso.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Solicitante">
+									<h:outputText value="#{etapasProcessoPrevistos.processoRequerimentoAcademico.aluno.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Curso">
+									<h:outputText value="#{etapasProcessoPrevistos.processoRequerimentoAcademico.aluno.curso.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Etapa">
+									<h:outputText value="#{etapasProcessoPrevistos.etapa.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Status" style="text-align: center;">
+									<h:outputText value="#{etapasProcessoPrevistos.status.nome}"/>
+								</p:column>
+								
+								<p:column headerText="Localização" style="text-align: center;">
+									<h:outputText value="#{etapasProcessoPrevistos.localizacao.nome}"/>
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
 					</p:tab>
+					
+					<!-- <p:tab title="Da coordenação" rendered="#{paginaInicial.isCoordenacao}">
+					
+					</p:tab>  -->
 				</p:tabView>
 			</p:panel>
 			
 			<!-- DIALOG PARA ACOMPANHAMENTO DAS SOLICITAÇÕES PELOS SETORES RESPONSÁVEIS -->
 			<p:dialog id="modalAcompanhamento" widgetVar="acompanhamento" closeOnEscape="false" draggable="false" resizable="false" position="top" 
 						modal="true"  visible="#{acompanhamentoSolicitacoes.exibirModalAcompanhamento()}" width="900px">
-				<p:scrollPanel style="height: 600px;" mode="native">
+				<p:scrollPanel style="height: 620px;" mode="native">
 					<p:panel style="width: 820px;">
 						<p:fieldset>
 							<h3 align="center">ACOMPANHAMENTO DE SOLICITAÇÕES</h3>
 								<p:fieldset>
 									<h:panelGrid columns="2" style="font-weight: bold;font-size: medium;">
-										<p:outputLabel for="etapaProcessoTemp" value="Número da etapaProcesso: "/>
-										<h:outputText id="etapaProcessoTemp" value="#{acompanhamentoSolicitacoes.etapasProcesso.id}"/>
-										
 										<p:outputLabel for="numeroProtocolo" value="Número do protocolo: "/>
 										<h:outputText id="numeroProtocolo" value="#{acompanhamentoSolicitacoes.etapasProcesso.processoRequerimentoAcademico.numeroProtocoloString}"/>
 	
@@ -185,7 +223,7 @@
 						</div>
 						<br/>
 						
-						<!-- Tabs com as etapas e o histórico -->
+						<!-- Tabs com as etapas, histórico e anexos -->
 						<p:tabView id="etapaHistorico">
 							<p:tab id="etapas" title="Etapas">
 								<p:dataTable rows="10" var="etapasProcesso" value="#{acompanhamentoSolicitacoes.listaEtapasProcesso}" paginator="true" paginatorPosition="bottom">
@@ -209,7 +247,7 @@
 								</p:dataTable>
 							</p:tab>
 							
-							<p:tab id="historico" title="Historico">
+							<p:tab id="historico" title="Histórico">
 								<p:dataTable rows="10" var="historicoProcesso" value="#{acompanhamentoSolicitacoes.listaHistorico}" paginator="true" paginatorPosition="bottom">
 									<p:column headerText="Data e hora">
 										<h:outputText value="#{historicoProcesso.dataHoraInicio}">

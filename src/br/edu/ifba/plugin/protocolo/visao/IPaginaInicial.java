@@ -8,6 +8,6 @@ public interface IPaginaInicial {
 
 	public void setListaEtapasProcessoEmEspera(List<EtapasProcesso> listaEtapasProcessoEmEspera);
 
-	public void setListaEtapasProcessoDaCoordenacao(List<EtapasProcesso> listaEtapasProcessoDaCoordenacao);
+	public void setListaEtapasProcessoNaoIniciados(List<EtapasProcesso> listaEtapasProcessoNaoIniciados);
 
 }

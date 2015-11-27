@@ -1,6 +1,5 @@
 package br.edu.ifba.plugin.protocolo.bd.beans;
 
-import java.beans.Transient;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="processorequerimentoacademico", schema="administrativo")

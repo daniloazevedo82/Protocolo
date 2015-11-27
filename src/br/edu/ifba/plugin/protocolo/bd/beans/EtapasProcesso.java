@@ -13,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.edu.ifba.plugin.protocolo.bd.enumeration.ParecerEnum;
 import br.edu.ifba.plugin.protocolo.bd.enumeration.StatusEnum;
@@ -30,6 +31,8 @@ public class EtapasProcesso {
 	private Etapa etapa;
 	private ProcessoRequerimentoAcademico processoRequerimentoAcademico;
 	
+	//TRANSIENT
+	private Setor localizacao;
 		
 	public EtapasProcesso() {
 	}
@@ -95,6 +98,14 @@ public class EtapasProcesso {
 	}
 	public void setProcessoRequerimentoAcademico(ProcessoRequerimentoAcademico processoRequerimentoAcademico) {
 		this.processoRequerimentoAcademico = processoRequerimentoAcademico;
+	}
+	
+	@Transient
+	public Setor getLocalizacao() {
+		return localizacao;
+	}
+	public void setLocalizacao(Setor localizacao) {
+		this.localizacao = localizacao;
 	}
 
 	@Override

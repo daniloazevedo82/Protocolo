@@ -18,9 +18,9 @@
 			<ui:insert name="menu">
 				<ui:include src="/menu.xhtml" />
 			</ui:insert>
-			<p:panel>
+			<p:panel style="padding-left: 100px; padding-right: 100px;">
 				<p:fieldset>
-					<h3 align="center">REQUERIMENTO CURSOS SUPERIORES</h3>
+					<h3 align="center">REQUERIMENTO ACADÊMICO</h3>
 					<h:panelGrid columns="2">
 						<p:fieldset style="width: 400px;font-size: large;"><b>
 							<p:outputLabel for="etapa" value="Etapa: "/>
@@ -50,57 +50,61 @@
 				<br />
 				<p:separator />
 				<br />
-				
-				<h:panelGrid columns="2">
-					<p:outputLabel for="tipoProcesso" value="* Tipo de requerimento: "/>
-					<p:selectOneMenu id="tipoProcesso" value="#{cadastroRequerimento.processoRequerimentoAcademico.tipoProcesso}" style="width: 300px">
-						<f:selectItem itemLabel="Escolha um tipo de requerimento" itemValue=""/>
-						<f:selectItems value="#{cadastroRequerimento.listaTipoProcesso}"/>
-						<p:ajax listener="#{cadastroRequerimento.carregarEtapa()}" update="etapa"/>
-					</p:selectOneMenu>
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel for="justificativa" value="Justificativa / observações: "/><p:panel visible="false"></p:panel>
-					<p:inputTextarea id="justificativa" value="#{cadastroRequerimento.processoRequerimentoAcademico.observacoes}" autoResize="false"
-									 rows="8" cols="112" counter="display" maxlength="1000" counterTemplate="{0} caracteres restantes."/>
-					<p:panel visible="false"></p:panel>
-    				<h:outputText id="display" />
-				</h:panelGrid>
+				<p:fieldset>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="tipoProcesso" value="* Tipo de requerimento: "/>
+						<p:selectOneMenu id="tipoProcesso" value="#{cadastroRequerimento.processoRequerimentoAcademico.tipoProcesso}" style="width: 300px">
+							<f:selectItem itemLabel="Escolha um tipo de requerimento" itemValue=""/>
+							<f:selectItems value="#{cadastroRequerimento.listaTipoProcesso}"/>
+							<p:ajax listener="#{cadastroRequerimento.carregarEtapa()}" update="etapa"/>
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="justificativa" value="Justificativa / observações: "/><p:panel visible="false"></p:panel>
+						<p:inputTextarea id="justificativa" value="#{cadastroRequerimento.processoRequerimentoAcademico.observacoes}" autoResize="false"
+										 rows="6" style="width: 1020px;" counter="display" maxlength="1000" counterTemplate="{0} caracteres restantes."/>
+						<p:panel visible="false"></p:panel>
+	    				<h:outputText id="display" />
+					</h:panelGrid>
+				</p:fieldset>
 				<br />
-				<h:panelGrid columns="2">
-					<p:panel style="width: 800px;height: 50px;">
-						<b style="font-size: larger;">Anexos</b>
-						<div align="right" style="float: right;">
-							<p:commandButton id="btnAnexos" process="@this" icon="ui-icon-plusthick" update=":mainForm:modalAnexos" 
-											 action="#{cadastroRequerimento.prepararModalAnexos()}" />
-						</div>
-					</p:panel>
-				</h:panelGrid>
-				
-				<p:outputPanel id="listAnexos" style="padding-top: 20px; width: 800px;">
-					<p:dataTable rows="10" var="anexos" value="#{cadastroRequerimento.listaDocumentoRequerimento}" emptyMessage="Não existem anexos." paginator="true" paginatorPosition="bottom">
-						<p:column headerText="Documento">
-							<h:outputText value="#{anexos.tipoDocumentoAcademico.nome}"/>
-						</p:column>
-						
-						<p:column headerText="Anexo">
-						       <h:outputText value="#{anexos.arquivo.nome}"/>
-						</p:column>
-						
-						<p:column headerText="Ações" style="width: 10%; text-align: center;">
-							<p:commandLink process="@this" update=":mainForm:listAnexos"
-										   action="#{cadastroRequerimento.excluirAnexo(anexos)}">
-								<p:graphicImage value="/img/btnExcluir.png" id="btnExcluir"/>
-								<p:tooltip for="btnExcluir" value="Excluir"/>
-								<f:setPropertyActionListener value="#{documentoRequerimento}" target="#{cadastroRequerimento.documentoRequerimento}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-				</p:outputPanel>
-				
-				<div align="right" style="width: 800px; padding-top: 15px">
+				<p:fieldset style="text-align: -webkit-center;">
+					<h:panelGrid columns="2">
+						<p:panel style="width: 800px;height: 50px;">
+							<b style="font-size: larger;">Anexos</b>
+							<div align="right" style="float: right;">
+								<p:commandButton id="btnAnexos" process="@this" icon="ui-icon-plusthick" update=":mainForm:modalAnexos" 
+												 action="#{cadastroRequerimento.prepararModalAnexos()}" />
+							</div>
+						</p:panel>
+					</h:panelGrid>
+					
+					<p:outputPanel id="listAnexos" style="padding-top: 20px; width: 800px;">
+						<p:dataTable rows="10" var="anexos" value="#{cadastroRequerimento.listaDocumentoRequerimento}" emptyMessage="Não existem anexos." paginator="true" paginatorPosition="bottom">
+							<p:column headerText="Documento">
+								<h:outputText value="#{anexos.tipoDocumentoAcademico.nome}"/>
+							</p:column>
+							
+							<p:column headerText="Anexo">
+							       <h:outputText value="#{anexos.arquivo.nome}"/>
+							</p:column>
+							
+							<p:column headerText="Ações" style="width: 10%; text-align: center;">
+								<p:commandLink process="@this" update=":mainForm:listAnexos"
+											   action="#{cadastroRequerimento.excluirAnexo(anexos)}">
+									<p:graphicImage value="/img/btnExcluir.png" id="btnExcluir"/>
+									<p:tooltip for="btnExcluir" value="Excluir"/>
+									<f:setPropertyActionListener value="#{documentoRequerimento}" target="#{cadastroRequerimento.documentoRequerimento}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</p:fieldset>
+				<div align="right" style="padding-top: 15px">
 					<p:commandButton id="btnConfirm" value="Salvar" process="@this" icon="ui-icon-disk" update=":mainForm:modalConfirm" 
 											 action="#{cadastroRequerimento.salvarRequerimento()}" />
+					&#160;&#160;
+					<p:commandButton value="Cancelar" process="@this" icon="ui-icon-cancel" action="/index.ifba"/>
 				</div>
 				
 			</p:panel>

@@ -41,6 +41,35 @@ public class EtapasProcessoDAO extends DAO{
 		return listaEtapasProcesso;
 	}
 	
+	public List<EtapasProcesso> getListagemEtapasProcessoNaoIniciado(Integer idusuariologado, Integer idsetorusuariologado){
+		List<EtapasProcesso> listaEtapasProcesso = new ArrayList<EtapasProcesso>();
+		
+		TypedQuery<EtapasProcesso> query = em.createQuery("SELECT ep "
+												+ "FROM EtapasProcesso ep "
+												+ "LEFT JOIN FETCH ep.etapa e "
+												+ "LEFT JOIN FETCH e.setor s "
+												+ "LEFT JOIN FETCH ep.processoRequerimentoAcademico pr "
+												+ "LEFT JOIN FETCH pr.tipoProcesso tp "
+												+ "LEFT JOIN FETCH pr.aluno al "
+												+ "LEFT JOIN FETCH al.curso c "
+												+ "WHERE s.id = " + idsetorusuariologado
+												+ " AND ep.status = :status "
+												+ " ORDER BY pr.data desc, pr.id desc", EtapasProcesso.class);
+		
+		query.setParameter("status", StatusEnum.NAO_INICIADO);
+
+		try {
+			listaEtapasProcesso = query.getResultList();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+//			em.close();
+		}
+		
+		return listaEtapasProcesso;
+	}
+	
 	public List<EtapasProcesso> getListagemEtapasProcessoByProcessoRequerimento(ProcessoRequerimentoAcademico processoRequerimentoAcademico){
 		List<EtapasProcesso> listaEtapasProcesso = new ArrayList<EtapasProcesso>();
 		
@@ -65,6 +94,32 @@ public class EtapasProcessoDAO extends DAO{
 		}
 		
 		return listaEtapasProcesso;
+	}
+	
+	public EtapasProcesso getLocalizacaoProcesso(EtapasProcesso etapasProcesso){
+		EtapasProcesso processo = new EtapasProcesso();
+		
+		TypedQuery<EtapasProcesso> query = em.createQuery("SELECT ep "
+												+ "FROM EtapasProcesso ep "
+												+ "LEFT JOIN FETCH ep.etapa e "
+												+ "LEFT JOIN FETCH e.setor s "
+												+ "LEFT JOIN FETCH ep.processoRequerimentoAcademico pr "
+												+ "WHERE pr.id = :idprocesso "
+												+ " AND ep.status = :status ", EtapasProcesso.class);
+		
+		query.setParameter("idprocesso", etapasProcesso.getProcessoRequerimentoAcademico().getId());
+		query.setParameter("status", StatusEnum.EM_ESPERA);
+		
+		try {
+			processo = query.getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+//			em.close();
+		}
+		
+		return processo;
 	}
 	
 	public EtapasProcesso getProximaEtapa(EtapasProcesso etapasProcesso){
