@@ -26,19 +26,6 @@ CREATE TABLE administrativo.pessoa(
 );
 ALTER TABLE administrativo.pessoa ADD COLUMN dtype character varying;
 
-CREATE SEQUENCE administrativo.sq_usuario;
-CREATE TABLE administrativo.usuario(
-	id integer,
-	login character varying,
-	senha character varying,
-	ativo boolean,
-	idsetor integer,
-	CONSTRAINT usuario_pk PRIMARY KEY (id),
-	CONSTRAINT usuario_fk_0 FOREIGN KEY (idsetor)
-		REFERENCES administrativo.setor (id)
-		ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
 CREATE SEQUENCE administrativo.sq_cargo;
 CREATE TABLE administrativo.cargo(
 	id integer,
@@ -123,6 +110,19 @@ ALTER TABLE administrativo.setor
 	ADD CONSTRAINT setor_fk_0 FOREIGN KEY (idCoordenador)
 	REFERENCES administrativo.servidor (id)
 	ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+CREATE SEQUENCE administrativo.sq_usuario;
+CREATE TABLE administrativo.usuario(
+	id integer,
+	login character varying,
+	senha character varying,
+	ativo boolean,
+	idsetor integer,
+	CONSTRAINT usuario_pk PRIMARY KEY (id),
+	CONSTRAINT usuario_fk_0 FOREIGN KEY (idsetor)
+		REFERENCES administrativo.setor (id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
 	
 CREATE SEQUENCE administrativo.sq_etapa;
 CREATE TABLE administrativo.etapa(
@@ -155,6 +155,35 @@ CREATE TABLE administrativo.processo(
 	CONSTRAINT processo_pk PRIMARY KEY (id),
 	CONSTRAINT processo_fk_0 FOREIGN KEY (idTipoProcesso)
 		REFERENCES administrativo.tipoprocesso (id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE SEQUENCE administrativo.sq_processorequerimentoacademico;
+CREATE TABLE administrativo.processorequerimentoacademico(
+	id integer,
+	observacoes character varying,
+	idaluno integer,
+	CONSTRAINT processorequerimentoacademico_pk PRIMARY KEY (id),
+	CONSTRAINT processorequerimentoacademico_fk_0 FOREIGN KEY (idaluno)
+		REFERENCES academico.aluno (id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE SEQUENCE administrativo.sq_etapasprocesso;
+CREATE TABLE administrativo.etapasprocesso(
+	id integer,
+	dataInicio date,
+	dataFim date,
+	status integer,
+	parecer integer,
+	idEtapa integer,
+	idProcessoRequerimento integer,
+	CONSTRAINT etapasprocesso_pk PRIMARY KEY (id),
+	CONSTRAINT etapasprocesso_fk_0 FOREIGN KEY (idEtapa)
+		REFERENCES administrativo.etapa (id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT etapasprocesso_fk_1 FOREIGN KEY (idProcessoRequerimento)
+		REFERENCES administrativo.processorequerimentoacademico (id)
 		ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
@@ -204,15 +233,11 @@ CREATE TABLE administrativo.tipodocumentoacademico(
 	CONSTRAINT tipodocumentoacademico_pk PRIMARY KEY (id)
 );
 
-CREATE SEQUENCE administrativo.sq_processorequerimentoacademico;
-CREATE TABLE administrativo.processorequerimentoacademico(
+CREATE SEQUENCE academico.sq_tipodocumentoacademico;
+CREATE TABLE academico.tipodocumentoacademico(
 	id integer,
-	observacoes character varying,
-	idaluno integer,
-	CONSTRAINT processorequerimentoacademico_pk PRIMARY KEY (id),
-	CONSTRAINT processorequerimentoacademico_fk_0 FOREIGN KEY (idaluno)
-		REFERENCES academico.aluno (id)
-		ON UPDATE NO ACTION ON DELETE NO ACTION
+	nome character varying,
+	CONSTRAINT tipodocumentoacademico_pk PRIMARY KEY (id)
 );
 
 CREATE SEQUENCE administrativo.sq_documentorequerimento;
@@ -234,31 +259,6 @@ CREATE TABLE administrativo.documentorequerimento(
 		ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-CREATE SEQUENCE administrativo.sq_etapasprocesso;
-CREATE TABLE administrativo.etapasprocesso(
-	id integer,
-	dataInicio date,
-	dataFim date,
-	status integer,
-	parecer integer,
-	idEtapa integer,
-	idProcessoRequerimento integer,
-	CONSTRAINT etapasprocesso_pk PRIMARY KEY (id),
-	CONSTRAINT etapasprocesso_fk_0 FOREIGN KEY (idEtapa)
-		REFERENCES administrativo.etapa (id)
-		ON UPDATE NO ACTION ON DELETE NO ACTION,
-	CONSTRAINT etapasprocesso_fk_1 FOREIGN KEY (idProcessoRequerimento)
-		REFERENCES administrativo.processorequerimentoacademico (id)
-		ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
-CREATE SEQUENCE academico.sq_tipodocumentoacademico;
-CREATE TABLE academico.tipodocumentoacademico(
-	id integer,
-	nome character varying,
-	CONSTRAINT tipodocumentoacademico_pk PRIMARY KEY (id)
-);
-
 -- INSERTS TABELA TIPOPROCESSO
 INSERT INTO administrativo.TipoProcesso (id, nome) VALUES (1, 'Progressão Funcional');
 INSERT INTO administrativo.TipoProcesso (id, nome) VALUES (2, 'Solicitação de compras');
@@ -272,6 +272,7 @@ INSERT INTO administrativo.TipoProcesso (id, nome) VALUES (9, 'Transferência int
 INSERT INTO administrativo.TipoProcesso (id, nome) VALUES (10, 'Transferência externa');
 
 -- INSERTS TABELA SETOR
+INSERT INTO administrativo.setor (id, nome) VALUES(0, 'Admin');
 INSERT INTO administrativo.setor (id, nome) VALUES(1, 'Protocolo');
 INSERT INTO administrativo.setor (id, nome) VALUES(2, 'DEN');
 INSERT INTO administrativo.setor (id, nome) VALUES(3, 'DG');
@@ -368,6 +369,7 @@ UPDATE administrativo.etapa set idsetor = 1 where nrsequencia = 1;
 ALTER TABLE administrativo.etapa ADD COLUMN ultimaEtapa boolean DEFAULT false;
 ALTER TABLE administrativo.etapa ADD COLUMN primeiraetapa boolean DEFAULT false;
 
+INSERT INTO administrativo.usuario(id, login, senha, ativo, idsetor) VALUES (0, 'admin', 'admin', true, 0);
 INSERT INTO administrativo.usuario(id, login, senha, ativo, idsetor) VALUES (nextval('administrativo.sq_usuario'), 'protocolo', '123456', true, 1);
 INSERT INTO administrativo.usuario(id, login, senha, ativo, idsetor) VALUES (nextval('administrativo.sq_usuario'), 'den', '123456', true, 2);
 INSERT INTO administrativo.usuario(id, login, senha, ativo, idsetor) VALUES (nextval('administrativo.sq_usuario'), 'cores', '123456', true, 8);
